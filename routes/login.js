@@ -1,12 +1,25 @@
-const express = require('express')
-const router = express.Router()
+const express = require('express');
+const router = express.Router();
 
-const { showLogin, loginUser } = require('../controllers/loginControllers')
+const {
+    showLogin,
+    loginUser,
+    logout
+} = require('../controllers/loginControllers');
 
+router.get('/login', showLogin);
 
-router.get('/', showLogin)
+router.post('/login', loginUser);
 
-router.post('/', loginUser)
+router.get(
+    '/logout',
+    (req, res, next) => {
+        if (req.session) {
+            console.log('hola');
+            next();
+        }
+    },
+    logout
+);
 
-
-module.exports = router
+module.exports = router;
