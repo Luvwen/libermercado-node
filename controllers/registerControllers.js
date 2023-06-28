@@ -10,7 +10,7 @@ const registerControllers = {
     },
     registerUser: async (req, res) => {
         const { username, email, password, password_confirm } = req.body;
-
+        console.log(req.body);
         database.query(
             'SELECT email FROM users WHERE email = ?',
             [email],
@@ -46,46 +46,6 @@ const registerControllers = {
                 }
             }
         );
-        // database.query(
-        //     'SELECT email FROM users WHERE email = ?',
-        //     [email],
-        //     async (error, res) => {
-        //         if (error) {
-        //             console.log(error);
-        //         }
-        //         console.log(res);
-        //         if (res.length > 0) {
-        //             return res.render('register', {
-        //                 message: 'The email is already in use'
-        //             });
-        //         } else if (password !== password_confirm) {
-        //             res.render('register', {
-        //                 message: 'Passwords dont match!'
-        //             });
-        //         } else {
-        //             let hashedPassword = await bcrypt.hash(password, 8);
-
-        //             database.query(
-        //                 'INSERT INTO users SET?',
-        //                 {
-        //                     username: username,
-        //                     email: email,
-        //                     user_password: hashedPassword
-        //                 },
-        //                 (error, res) => {
-        //                     if (error) {
-        //                         console.log(error);
-        //                     } else {
-        //                         // console.log(res);
-        //                         // return res.render('register', {
-        //                         //     message: 'User registered!'
-        //                         // });
-        //                     }
-        //                 }
-        //             );
-        //         }
-        //     }
-        // );
     }
 };
 

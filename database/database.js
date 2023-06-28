@@ -7,11 +7,4 @@ const db = mysql.createConnection({
     database: 'libremercado'
 });
 
-// try {
-//     db.connect();
-//     console.log('Mysql conectado!');
-// } catch (error) {
-//     console.log(error);
-// }
-
 module.exports = db;

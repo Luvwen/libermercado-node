@@ -14,24 +14,21 @@ const loginControllers = {
         if (!email || !password) {
             res.render('login', { message: 'Email and password are required' });
         }
-        database.query(
-            'SELECT * FROM users WHERE email = ?',
-            [email],
-            async (error, data) => {
-                if (data.length === 0) {
-                    return res.render('login', { message: 'Email invalid' });
-                } else if (
-                    !(await bcrypt.compare(password, data[0].user_password))
-                ) {
-                    return res.render('login', {
-                        message: 'Wrong password, try again'
-                    });
-                } else {
-                    req.session.loggedUser = data;
-                    res.redirect('/');
-                }
+        const query = `SELECT * FROM users WHERE email = ${email}`;
+        database.query(query, async (error, data) => {
+            if (data.length === 0) {
+                return res.render('login', { message: 'Email invalid' });
+            } else if (
+                !(await bcrypt.compare(password, data[0].user_password))
+            ) {
+                return res.render('login', {
+                    message: 'Wrong password, try again'
+                });
+            } else {
+                req.session.loggedUser = data;
+                res.redirect('/');
             }
-        );
+        });
     },
     logout: (req, res) => {
         req.session.destroy();
