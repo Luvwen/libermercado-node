@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title><%= username%> Inventory</title>
+    </head>
+    <body>
+        <h1>¡Hola, bienvenido a su inventario!</h1>
+        <h2>
+            Ir a ver todos los items agregados:
+            <a href="/inventory/allItems">AllItems</a>
+        </h2>
+        <h2>Agregar item</h2>
+        <form action="/inventory/addItem" method="post">
+            <label for="item_name">Nombre</label>
+            <input name="item_name" />
+            <label for="item_price">Precio</label>
+            <input name="item_price" />
+            <label for="item_description">Descripción</label>
+            <input name="item_description" />
+            <button type="submit">Add</button>
+        </form>
+        <h2>Actualizar item</h2>
+        <form action="/inventory/actualizeItem?_method=PUT" method="post">
+            <label for="item_id">itemId</label>
+            <input name="item_id" />
+            <label for="actualized_item_name">Nombre</label>
+            <input name="actualized_item_name" />
+            <label for="actualized_item_price">Precio</label>
+            <input name="actualized_item_price" />
+            <label for="actualized_item_description">Descripción</label>
+            <input name="actualized_item_description" />
+            <button type="submit">Add</button>
+        </form>
+        <h2>Remover item</h2>
+        <form action="/inventory/removeItem?_method=DELETE" method="post">
+            <label for="item_id">itemId</label>
+            <input name="item_id" />
+            <button type="submit">Remove</button>
+        </form>
+    </body>
+</html>

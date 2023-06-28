@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Inventory List</title>
+    </head>
+    <body>
+        <a href="/inventory">Inventory</a>
+        <% for(let i = 0; i < data.length; i++) { %>
+        <h2>Id: <%= data[i].id %></h2>
+        <h2>Nombre: <%= data[i].item_name %></h2>
+        <h2>Precio: <%= data[i].item_price %></h2>
+        <h2>Descripcion: <%= data[i].item_description %></h2>
+        <br />
+        <% } %> <% if(data.length === 0) { %>
+        <h1>
+            No hay elementos en su inventario, agregue algunos
+            <a href="/inventory">aquí</a>
+        </h1>
+        <% } %>
+    </body>
+</html>

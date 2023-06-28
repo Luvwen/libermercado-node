@@ -4,11 +4,13 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const session = require('express-session');
+const methodOverride = require('method-override');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const loginRouter = require('./routes/login');
 const registerRouter = require('./routes/register');
+const inventoryRouter = require('./routes/inventory');
 const database = require('./database/database');
 
 var app = express();
@@ -23,11 +25,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ secret: 'Mensaje Secreto' }));
+app.use(methodOverride('_method'));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/auth', loginRouter);
 app.use('/auth/register', registerRouter);
+app.use('/inventory', inventoryRouter);
 app.use('/check', (req, res) => {
     if (req.session.loggedUser === undefined) {
         res.send('not logged');

@@ -4,7 +4,10 @@ const session = require('express-session');
 
 const loginControllers = {
     showLogin: (req, res) => {
-        res.render('login', { message: '' });
+        if (req.session.loggedUser === undefined) {
+            return res.render('login', { message: '' });
+        }
+        res.redirect('/');
     },
     loginUser: (req, res) => {
         const { email, password } = req.body;
@@ -32,7 +35,7 @@ const loginControllers = {
     },
     logout: (req, res) => {
         req.session.destroy();
-        res.send('deslogeado papu');
+        res.redirect('/');
     }
 };
 

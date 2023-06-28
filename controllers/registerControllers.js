@@ -3,7 +3,10 @@ const database = require('../database/database');
 
 const registerControllers = {
     showRegister: (req, res) => {
-        res.render('register', { message: '' });
+        if (req.session.loggedUser === undefined) {
+            return res.render('register', { message: '' });
+        }
+        res.redirect('/');
     },
     registerUser: async (req, res) => {
         const { username, email, password, password_confirm } = req.body;
