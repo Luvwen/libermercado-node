@@ -5,6 +5,7 @@ const {
     showInventory,
     addItemToInventory,
     removeItemFromInventory,
+    removeItemWithId,
     showAllItems,
     updateItemFromInventory
 } = require('../controllers/inventoryControllers');
@@ -18,4 +19,7 @@ router.post('/addItem', addItemToInventory);
 router.put('/actualizeItem', updateItemFromInventory);
 
 router.delete('/removeItem', removeItemFromInventory);
+
+router.get('/removeItem/:itemId', removeItemWithId)
+
 module.exports = router;

@@ -60,9 +60,19 @@ const inventoryControllers = {
             }
         );
     },
+    removeItemWithId: (req, res) => {
+        const { itemId } = req.params
+        database.query('DELETE FROM inventory WHERE id = ?', [itemId], (error, data) => {
+            if(error){
+                console.log(error)
+            } else {
+                res.redirect('/inventory/allItems')
+            }
+        })
+    },
     updateItemFromInventory: (req, res) => {
         const {
-            item_id,
+            list_id,
             actualized_item_name,
             actualized_item_price,
             actualized_item_description
@@ -70,7 +80,7 @@ const inventoryControllers = {
         if (actualized_item_price === '' || !parseInt(actualized_item_price)) {
             res.redirect('/inventory');
         }
-        const query = `UPDATE inventory SET item_name = "${actualized_item_name}", item_price = ${actualized_item_price}, item_description = "${actualized_item_description}" WHERE id = ${item_id}`;
+        const query = `UPDATE inventory SET item_name = "${actualized_item_name}", item_price = ${actualized_item_price}, item_description = "${actualized_item_description}" WHERE id = ${list_id}`;
         database.query(query, (error, data) => {
             if (error) {
                 console.log(error);

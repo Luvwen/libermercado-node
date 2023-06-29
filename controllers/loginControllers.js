@@ -14,8 +14,10 @@ const loginControllers = {
         if (!email || !password) {
             res.render('login', { message: 'Email and password are required' });
         }
-        const query = `SELECT * FROM users WHERE email = ${email}`;
-        database.query(query, async (error, data) => {
+        database.query('SELECT * FROM users WHERE email = ?', [email], async (error, data) => {
+            if(error) {
+                console.log(error)
+            }
             if (data.length === 0) {
                 return res.render('login', { message: 'Email invalid' });
             } else if (
