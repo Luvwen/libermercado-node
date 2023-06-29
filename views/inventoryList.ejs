@@ -10,6 +10,7 @@
         <a href="/inventory">Inventory</a>
         <% if(data !== undefined) { %>
             <% for(let i = 0; i < data.length; i++) { %>
+                <img src="/images/<%= data[i].item_image %>" />
                 <h2>Id: <%= data[i].id %></h2>
                 <h2>Nombre: <%= data[i].item_name %></h2>
                 <h2>Precio: <%= data[i].item_price %></h2>

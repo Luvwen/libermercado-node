@@ -14,13 +14,15 @@
         </h2>
         <p>Cantidad de items en inventario actualmente: <%= data.length %></p>
         <h2>Agregar item</h2>
-        <form action="/inventory/addItem" method="post">
+        <form action="/inventory/addItem" enctype="multipart/form-data" method="post">
             <label for="item_name">Nombre</label>
             <input name="item_name" />
             <label for="item_price">Precio</label>
             <input name="item_price" />
             <label for="item_description">Descripción</label>
             <input name="item_description" />
+            <label for="item_image">Imagen</label>
+            <input type="file" name="item_image" />
             <button type="submit">Add</button>
         </form>
         <h2>Actualizar item</h2>

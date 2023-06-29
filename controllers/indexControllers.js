@@ -1,18 +1,9 @@
-const session = require('express-session');
-
-
 const indexControllers = {
     home: (req, res, next) => {
         if (req.session.loggedUser !== undefined) {
-            return res.render('index', {
-                title: 'HOLA GENTE',
-                button: true
-            });
+            return res.redirect('/inventory');
         }
-        res.render('index', {
-            title: 'Express',
-            button: false
-        });
+        res.redirect('/auth/login')
     }
 };
 

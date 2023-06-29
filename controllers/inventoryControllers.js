@@ -1,4 +1,5 @@
 const database = require('../database/database');
+const path = require('path')
 
 const inventoryControllers = {
     showInventory: (req, res) => {
@@ -22,19 +23,31 @@ const inventoryControllers = {
     addItemToInventory: (req, res) => {
         const { item_name, item_price, item_description } = req.body;
         const { id, username } = req.session.loggedUser[0];
+
         if (!parseInt(item_price) || item_price === '') {
             return res.render('inventory', {
                 data: req.session.data,
                 username: username
             });
         } else {
+            let sampleFile;
+            let uploadPath;
+            sampleFile = req.files.item_image 
+            uploadPath = uploadPath = path.join(__dirname, '..', '/public/images/') + sampleFile.name;
+            sampleFile.mv(uploadPath, (err) => {
+                if(err){
+                    console.log(err)
+                }
+                console.log(sampleFile.name)
+            })
             database.query(
                 'INSERT INTO inventory SET?',
                 {
                     id_user: id,
                     item_name: item_name,
                     item_price: item_price,
-                    item_description: item_description
+                    item_description: item_description,
+                    item_image: sampleFile.name
                 },
                 (error, data) => {
                     if (error) {
