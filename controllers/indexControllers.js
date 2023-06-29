@@ -1,5 +1,6 @@
 const session = require('express-session');
 
+
 const indexControllers = {
     home: (req, res, next) => {
         if (req.session.loggedUser !== undefined) {

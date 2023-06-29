@@ -12,6 +12,7 @@ const loginRouter = require('./routes/login');
 const registerRouter = require('./routes/register');
 const inventoryRouter = require('./routes/inventory');
 const database = require('./database/database');
+const rememberUser = require('./middlewares/rememberUser');
 
 var app = express();
 
@@ -26,6 +27,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ secret: 'Mensaje Secreto' }));
 app.use(methodOverride('_method'));
+app.use(rememberUser)
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

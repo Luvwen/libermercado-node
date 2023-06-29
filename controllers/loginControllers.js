@@ -28,7 +28,16 @@ const loginControllers = {
                 });
             } else {
                 req.session.loggedUser = data;
-                res.redirect('/');
+                res.cookie('userLogin', data[0].email, {maxAge: 86400000})
+                // const {id, username, email, user_password} = data[0]
+                // database.query('INSERT INTO loginusers SET?', {id_user: id, username: username, email: email, user_password: user_password}, (error, data) => {
+                //     if (error) {
+                //         console.log(error)
+                //     } else {
+                //         res.redirect('/');
+                //     }
+                // })
+                res.redirect('/')
             }
         });
     },
