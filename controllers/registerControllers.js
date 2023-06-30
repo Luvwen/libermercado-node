@@ -10,7 +10,11 @@ const registerControllers = {
     },
     registerUser: async (req, res) => {
         const { username, email, password, password_confirm } = req.body;
-        console.log(req.body);
+        if(username.length === 0 || email.length === 0 || password.length === 0 || password_confirm.length === 0){
+            return res.render('register', {
+                message: 'Uno o mas campos estan vacíos'
+            });
+        }
         database.query(
             'SELECT email FROM users WHERE email = ?',
             [email],
@@ -19,7 +23,7 @@ const registerControllers = {
                     console.log(error);
                 }
                 if (data.length > 0) {
-                    return res.render('register', { message: 'Email en uso' });
+                    return res.render('register', { message: 'Email ya registrado' });
                 } else if (password !== password_confirm) {
                     return res.render('register', {
                         message: 'Las contraseñas deben coincidir'

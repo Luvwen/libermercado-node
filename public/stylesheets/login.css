@@ -78,3 +78,7 @@ body {
 .form-register:hover {
     color: #0591AF;
 }
+
+.error {
+    padding-top: 15px;
+}

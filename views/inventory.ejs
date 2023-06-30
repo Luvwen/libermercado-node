@@ -27,7 +27,7 @@
                 <input class="form-input" name="item_description" />
                 <label class="form-label file-label" for="item_image">Seleccione una imagen</label>
                 <input class="form-input file-input" type="file" name="item_image" id="item_image"/>
-                <button class="submit-button" type="submit">Add</button>
+                <button class="submit-button" type="submit">Agregar</button>
             </form>
         <% } else if (action === 'update') { %>
             <div class="links-container">
@@ -52,7 +52,7 @@
                 <input class="form-input" name="actualized_item_price" />
                 <label class="form-label" for="actualized_item_description">Descripción</label>
                 <input class="form-input" name="actualized_item_description" />
-                <button class="submit-button" type="submit">Update</button>
+                <button class="submit-button" type="submit">Actualizar</button>
             </form>
             <% } else if (action === 'delete') { %>
                 <div class="links-container">
@@ -73,7 +73,7 @@
                         <% } %>
                     </select>
                     <% if(data.length !== 0) { %> 
-                        <button class="submit-button" type="submit">Remove</button>
+                        <button class="submit-button" type="submit">Eliminar</button>
                     <% } else { %>
                         <a class="back-button" href="/inventory">Volver</d>
                     <% } %>
