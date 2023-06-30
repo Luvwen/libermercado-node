@@ -4,21 +4,26 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Register</title>
+        <link rel='stylesheet' href='/stylesheets/register.css' />
     </head>
     <body>
-        <h1>Hi, welcome to our register page!</h1>
-        <form action="/auth/register" method="post">
-            <label for="username">Name</label>
-            <input name="username" />
-            <label for="email">Email</label>
-            <input name="email" type="email" />
-            <label for="password">Password</label>
-            <input name="password" type="password" />
-            <label for="password_confirm">Confirm password</label>
-            <input name="password_confirm" type="password" />
-            <button type="submit">Register</button>
-        </form>
-
-        <h2><%= message %></h2>
+        <div class="register-container">
+            <h1>Hi, welcome to our register page!</h1>
+            <form class="register-form" action="/auth/register" method="post">
+                <label class="form-label" for="username">Name</label>
+                <input class="form-input" name="username" />
+                <label class="form-label" for="email">Email</label>
+                <input class="form-input" name="email" type="email" />
+                <label class="form-label" for="password">Password</label>
+                <input class="form-input" name="password" type="password" />
+                <label class="form-label" for="password_confirm">Confirm password</label>
+                <input class="form-input" name="password_confirm" type="password" />
+                <div class="form-buttons">
+                    <button class="form-button" type="submit">Register</button>
+                    <a class="form-login" href="/auth/login">Login</a>
+                </div>
+            </form>
+            <h2><%= message %></h2>
+        </div>
     </body>
 </html>

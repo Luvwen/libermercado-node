@@ -1,6 +1,5 @@
 const database = require('../database/database');
 const bcrypt = require('bcrypt');
-const session = require('express-session');
 
 const loginControllers = {
     showLogin: (req, res) => {

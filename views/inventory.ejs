@@ -5,50 +5,86 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title><%= username %> Inventory Manager</title>
+        <link rel='stylesheet' href='/stylesheets/inventory.css' />
     </head>
     <body>
-        <h1>¡Hola, bienvenido a su inventario!</h1>
-        <h2>
-            Ir a ver todos los items agregados:
-            <a href="/inventory/allItems">AllItems</a>
-        </h2>
-        <p>Cantidad de items en inventario actualmente: <%= data.length %></p>
-        <h2>Agregar item</h2>
-        <form action="/inventory/addItem" enctype="multipart/form-data" method="post">
-            <label for="item_name">Nombre</label>
-            <input name="item_name" />
-            <label for="item_price">Precio</label>
-            <input name="item_price" />
-            <label for="item_description">Descripción</label>
-            <input name="item_description" />
-            <label for="item_image">Imagen</label>
-            <input type="file" name="item_image" />
-            <button type="submit">Add</button>
-        </form>
-        <h2>Actualizar item</h2>
-        <form action="/inventory/actualizeItem?_method=PUT" id="update_item" method="post">
-            <select form="update_item" name="list_id">
-                <% if(data.length === 0) { %>
-                    <option>No items</option>
+        <%- include('partials/navbar.ejs') %>
+        <div class="inventory">
+        <h1 class="inventory-title">¡Hola <span><%= username %></span>, bienvenido a su inventario!</h1>
+        <p class="inventory-text">Cantidad de items en stock: <%= data.length %></p>
+        <% if(action === 'add') { %>
+            <div class="links-container">
+                <p><a href="/inventory/actualizeItem/update" >Editar</a></p>
+                <p><a href="/inventory/removeItem/delete" >Eliminar</a></p>
+            </div>
+            <h2>Agregar item</h2>
+            <form class="form" action="/inventory/addItem" enctype="multipart/form-data" method="post">
+                <label class="form-label" for="item_name">Nombre</label>
+                <input class="form-input" name="item_name" />
+                <label class="form-label" for="item_price">Precio</label>
+                <input class="form-input" name="item_price" />
+                <label class="form-label" for="item_description">Descripción</label>
+                <input class="form-input" name="item_description" />
+                <label class="form-label file-label" for="item_image">Seleccione una imagen</label>
+                <input class="form-input file-input" type="file" name="item_image" id="item_image"/>
+                <button class="submit-button" type="submit">Add</button>
+            </form>
+        <% } else if (action === 'update') { %>
+            <div class="links-container">
+                <p><a href="/inventory/addItem/add" >Agregar</a></p>
+                <p><a href="/inventory/removeItem/delete" >Eliminar</a></p>
+            </div>
+            <h2>Actualizar item</h2>
+            <form class="form" action="/inventory/actualizeItem?_method=PUT" id="update_item" method="post">
+                <select class="select-form" form="update_item" name="list_id">
+                    <% if(data.length === 0) { %>
+                        <option>No items</option>
+                    <% } %>
+                    <option>Elija el elemento a editar</option>
+                    <% for(let i = 0; i < data.length; i++) { %>
+                        <label><%= data[i].item_name %></label>
+                        <option value="<%= data[i].id %>"><%= data[i].id %></option>
+                    <% } %>
+                </select>
+                <label class="form-label" for="actualized_item_name">Nombre</label>
+                <input class="form-input" name="actualized_item_name" />
+                <label class="form-label" for="actualized_item_price">Precio</label>
+                <input class="form-input" name="actualized_item_price" />
+                <label class="form-label" for="actualized_item_description">Descripción</label>
+                <input class="form-input" name="actualized_item_description" />
+                <button class="submit-button" type="submit">Update</button>
+            </form>
+            <% } else if (action === 'delete') { %>
+                <div class="links-container">
+                    <p><a href="/inventory/addItem/add" >Agregar</a></p>
+                    <p><a href="/inventory/actualizeItem/update" >Editar</a></p>
+                </div>
+                <h2>Remover item</h2>
+                <form class="form" action="/inventory/removeItem?_method=DELETE" id="delete-item" method="post">
+                    <select class="select-form" form="delete-item" name="item_id">
+                        <% if(data.length === 0) { %>
+                            <option>No items</option>
+                        <% } else { %>
+                        <option value="">Elija el elemento a eliminar</option>
+                        <% for(let i = 0; i < data.length; i++) { %>
+                            <label><%= data[i].item_name %></label>
+                            <option value="<%= data[i].id %>"><%= data[i].id %></option>
+                        <% } %>
+                        <% } %>
+                    </select>
+                    <% if(data.length !== 0) { %> 
+                        <button class="submit-button" type="submit">Remove</button>
+                    <% } else { %>
+                        <a class="back-button" href="/inventory">Volver</d>
+                    <% } %>
+                </form>
+                <% } else {%>
+                    <div class="links">
+                        <p><a href="/inventory/addItem/add" >Agregar elementos</a></p>
+                        <p><a href="/inventory/actualizeItem/update" >Editar elementos</a></p>
+                        <p><a href="/inventory/removeItem/delete" >Eliminar elementos</a></p>
+                    </div>
                 <% } %>
-            <% for(let i = 0; i < data.length; i++) { %>
-                <label><%= data[i].item_name %></label>
-                <option value="<%= data[i].id %>"><%= data[i].id %></option>
-           <% } %>
-        </select>
-            <label for="actualized_item_name">Nombre</label>
-            <input name="actualized_item_name" />
-            <label for="actualized_item_price">Precio</label>
-            <input name="actualized_item_price" />
-            <label for="actualized_item_description">Descripción</label>
-            <input name="actualized_item_description" />
-            <button type="submit">Update</button>
-        </form>
-        <h2>Remover item</h2>
-        <form action="/inventory/removeItem?_method=DELETE" method="post">
-            <label for="item_id">itemId</label>
-            <input name="item_id" />
-            <button type="submit">Remove</button>
-        </form>
+    </div>
     </body>
 </html>

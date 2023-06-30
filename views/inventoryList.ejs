@@ -5,24 +5,28 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Inventory List</title>
+    <link rel='stylesheet' href='/stylesheets/inventoryList.css' />
     </head>
     <body>
-        <a href="/inventory">Inventory</a>
-        <% if(data !== undefined) { %>
-            <% for(let i = 0; i < data.length; i++) { %>
-                <img src="/images/<%= data[i].item_image %>" />
-                <h2>Id: <%= data[i].id %></h2>
-                <h2>Nombre: <%= data[i].item_name %></h2>
-                <h2>Precio: <%= data[i].item_price %></h2>
-                <h2>Descripcion: <%= data[i].item_description %></h2>
-                <a href="/inventory/removeItem/<%= data[i].id %>">Remove</a>
-                <br />
-                <% } %> 
+        <%- include('partials/navbar.ejs') %>
+        <div class="container">
+            <% if(data !== undefined) { %>
+                <% for(let i = 0; i < data.length; i++) { %>
+                <div class="card-item">
+                    <h2 class="card-item__description title">#<%= data[i].id %> <span><%= data[i].item_name %></span></h2>
+                    <img class="card-item__img" src="/images/<%= data[i].item_image %>" />
+                    <h2 class="card-item__description">$<%= data[i].item_price %></h2>
+                    <h2 class="card-item__description"><%= data[i].item_description %></h2>
+                    <a class="remove-button" href="/inventory/deleteItem/<%= data[i].id %>">Remove</a>
+                    <br />
+                </div>
+            <% } %> 
         <% } %>
+        </div>
         <% if(data.length === 0) { %>
-        <h1>
-            No hay elementos en su inventario, agregue algunos
-            <a href="/inventory">aquí</a>
+            <h1 class="empty-inventory">
+                No hay elementos en su inventario, agregue 
+            <a href="/inventory">algunos</a>
         </h1>
         <% } %>
     </body>

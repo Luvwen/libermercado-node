@@ -5,14 +5,18 @@ const inventoryControllers = {
     showInventory: (req, res) => {
         if (req.session.loggedUser !== undefined) {
             const { username } = req.session.loggedUser[0];
-            database.query('SELECT * FROM inventory', (error, data) => {
+            const { action } = req.params
+            const email  = req.cookies.userLogin
+            database.query('SELECT i.id, i.id_user, i.item_name, i.item_price, i.item_description, i.item_image FROM inventory as i JOIN users ON i.id_user = users.id WHERE users.email = ?', [email], (error, data) => {
                 if (error) {
                     console.log(error);
                 } else {
                     req.session.data = data;
+                    const usernameToUppercase = username.charAt(0).toUpperCase() + username.slice(1)
                     return res.render('inventory', {
-                        username: username,
-                        data: data
+                        username: usernameToUppercase,
+                        data: data,
+                        action: action
                     });
                 }
             });
@@ -53,25 +57,35 @@ const inventoryControllers = {
                     if (error) {
                         console.log(error);
                     } else {
-                        res.redirect('/inventory');
+                        res.redirect('/inventory/addItem/add');
                     }
                 }
             );
         }
     },
     removeItemFromInventory: (req, res) => {
-        const { item_id } = req.body;
-        database.query(
-            'DELETE FROM inventory WHERE id = ?',
-            [item_id],
-            (error, data) => {
-                if (error) {
-                    console.log(error);
-                } else {
-                    res.redirect('/inventory');
-                }
+        const email = req.cookies.userLogin
+        database.query('SELECT inventory.id_user FROM users JOIN inventory ON users.id = inventory.id_user WHERE users.email = ?', [email], (error, response) => {
+            if(error){
+                console.log(error)
+            } else {
+                const { item_id } = req.body
+                console.log(req.body)
+                const id_user = response[0].id_user
+                database.query(
+                    'DELETE FROM inventory WHERE id = ? && id_user = ?',
+                    [item_id, id_user],
+                    (error, data) => {
+                        if (error) {
+                            console.log(error);
+                        } else {
+                            res.redirect('/inventory/removeItem/delete');
+                        }
+                    }
+                );
             }
-        );
+        })
+        
     },
     removeItemWithId: (req, res) => {
         const { itemId } = req.params
@@ -98,12 +112,13 @@ const inventoryControllers = {
             if (error) {
                 console.log(error);
             } else {
-                res.redirect('/inventory');
+                res.redirect('/inventory/actualizeItem/update');
             }
         });
     },
     showAllItems: (req, res) => {
-        database.query('SELECT * FROM inventory', (error, data) => {
+        const email  = req.cookies.userLogin
+        database.query('SELECT i.id, i.id_user, i.item_name, i.item_price, i.item_description, i.item_image FROM inventory AS i JOIN users ON i.id_user = users.id WHERE users.email = ?', [email], (error, data) => {
             if (error) {
                 console.log(error);
             } else {
