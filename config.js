@@ -1,4 +1,4 @@
-const DB_HOST = process.env.HOST || 'localhost';
+const DB_HOST = process.env.HOST || '0.0.0.0';
 const DB_USER = process.env.USER || 'root';
 const DB_PASSWORD = process.env.PASSWORD || '';
 const DB_NAME = process.env.NAME || 'libremercado';
