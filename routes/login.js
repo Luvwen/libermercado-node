@@ -15,7 +15,6 @@ router.get(
     '/logout',
     (req, res, next) => {
         if (req.session) {
-            console.log('hola');
             next();
         }
     },
