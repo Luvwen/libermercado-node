@@ -23,7 +23,7 @@
     justify-content: space-evenly;
     align-items: center;
     list-style: none;
-    width: 25%;
+    width: 350px;
 }
 
 .navbar-list__item {
@@ -37,4 +37,68 @@
 
 .navbar-list__item-link:hover {
     color: #0591AF;
+}
+
+.hamburger-menu {
+    display: none;
+}
+
+@media (max-width: 1100px) {
+    .header {
+        margin-bottom: 80px;
+    }
+    
+    .navbar {
+        height: 80px;
+        width: 100%;
+        background: #F97316;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: fixed;
+        top: 0;
+    }
+    
+    .logo > img {
+        height: 50px;
+        width: 50px;
+        margin-left: 25px;
+    }
+
+    .navbar-list {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        list-style: none;
+        width: 350px;
+    }
+    
+    .navbar-list__item {
+        font-size: 24px;
+    }
+    
+    .navbar-list__item-link {
+        text-decoration: none;
+        color: #FFFFFF;
+    }
+    
+    .navbar-list__item-link:hover {
+        color: #0591AF;
+    }
+}
+
+@media (max-width: 640px) {
+
+    .navbar-list {
+        display: none;
+    }
+
+    .hamburger-menu {
+        display: block;
+        height: 50px;
+        width: 50px;
+        margin-right: 25px;
+        cursor: pointer;
+    }
+
 }
