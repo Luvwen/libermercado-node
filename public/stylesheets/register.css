@@ -86,3 +86,79 @@ body {
 .form-login:hover {
     color: #0591AF;
 }
+
+@media (max-width: 769px) {
+    .register-container {
+        width: 90vw;
+        background: #FFFFFE;
+        height: 600px;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+    
+    .register-container > h1 {
+        margin-top: 25px;
+        font-size: 28px;
+    }
+    
+    .register-form {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+        height: 600px;
+        width: 75%;
+        margin-top: 25px;
+    }
+
+    .form-buttons {
+        margin-top: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .register-container {
+        width: 600px;
+        height: 700px;
+        background: inherit;
+        justify-content: space-evenly;
+    }
+    
+    .register-container > h1 {
+        margin-top: 25px;
+        text-align: center;
+        padding: 0 10px;
+        color: white;
+    }
+    
+    .register-form {
+        height: 600px;
+        color: white;
+    }
+    
+    .form-input {
+        background-color: #F97316;
+        border-bottom: 1px solid #718096;
+        color: white;
+    }
+    
+    .form-input:focus {
+       border-bottom: 2px solid white;
+    }
+    
+    .form-button {
+        background:#0591AF;
+        color: #FFFFFF;
+    }
+    
+    .form-login {
+        margin-top: 15px;
+        text-decoration: none;
+        color: white;
+    }
+    
+    .form-login:hover {
+        color: #0591AF;
+    }
+}
