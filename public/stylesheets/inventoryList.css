@@ -61,5 +61,10 @@
 }
 
 span {
-    text-transform: capitalize;
+    display: inline-block;
+
+}
+
+span::first-letter {
+    text-transform: uppercase;
 }

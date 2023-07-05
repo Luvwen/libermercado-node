@@ -3,16 +3,21 @@ const bcrypt = require('bcrypt');
 
 const loginControllers = {
     showLogin: (req, res) => {
-        if (req.session.loggedUser === undefined) {
-            if (req.cookies.userLogin !== undefined) {
-                req.session.loggedUser = req.cookies.userLogin;
+        try {
+            if (req.session.loggedUser === undefined) {
+                if (req.cookies.userLogin !== undefined) {
+                    req.session.loggedUser = req.cookies.userLogin;
+                }
+                return res.render('login', { message: '' });
             }
-            return res.render('login', { message: '' });
+            res.redirect('/');
+        } catch (error) {
+            res.render('error', {errorNumber: 403, errorType: 'Intento de ingreso incorrecto', errorDescription: 'Intente nuevamente dentro de unos minutos'})
         }
-        res.redirect('/');
     },
     loginUser: (req, res) => {
-        const { email, password } = req.body;
+        try {
+            const { email, password } = req.body;
         if (email.length === 0 || password.length === 0) {
             res.render('login', {
                 message: 'El email y la contraseña son obligatorias'
@@ -38,23 +43,22 @@ const loginControllers = {
                     res.cookie('userLogin', data[0], {
                         maxAge: 86400000
                     });
-                    // const {id, username, email, user_password} = data[0]
-                    // database.query('INSERT INTO loginusers SET?', {id_user: id, username: username, email: email, user_password: user_password}, (error, data) => {
-                    //     if (error) {
-                    //         console.log(error)
-                    //     } else {
-                    //         res.redirect('/');
-                    //     }
-                    // })
                     res.redirect('/');
                 }
             }
         );
+        } catch (error) {
+            res.render('error', {errorNumber: 403, errorType: 'Intento de ingreso incorrecto', errorDescription: 'Intente nuevamente dentro de unos minutos'})
+        }
     },
     logout: (req, res) => {
-        res.clearCookie('userLogin');
-        req.session.destroy();
-        res.redirect('/');
+        try {
+            res.clearCookie('userLogin');
+            req.session.destroy();
+            res.redirect('/');
+        } catch (error) {
+            res.render('error', {errorNumber: 403, errorType: 'Intento de ingreso incorrecto', errorDescription: 'Intente nuevamente dentro de unos minutos'})
+        }
     }
 };
 

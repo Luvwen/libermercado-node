@@ -1,3 +1,19 @@
-<h1><%= message %></h1>
-<h2><%= error.status %></h2>
-<pre><%= error.stack %></pre>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error <%= errorNumber %></title>
+    <link rel="stylesheet" href="/stylesheets/error.css">
+</head>
+<body>
+    <div class="background-container">
+        <img class="background" src="https://prints.ultracoloringpages.com/f1384e21ee57ebb9d61613c16fd8cf55.png" alt="error-image">
+    </div>
+    <div class="error-container">
+        <h1><span>Error <%= errorNumber %></span> <%= errorType %></h1>
+        <h3><%= errorDescription %></h3>
+        <a href="http://localhost:3000/">Home</a>
+    </div>
+</body>
+</html>

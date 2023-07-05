@@ -9,10 +9,10 @@ const methodOverride = require('method-override');
 const fileUpload = require('express-fileupload');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 const loginRouter = require('./routes/login');
 const registerRouter = require('./routes/register');
 const inventoryRouter = require('./routes/inventory');
+const errorRouter = require('./routes/error')
 const database = require('./database/database');
 const rememberUser = require('./middlewares/rememberUser');
 
@@ -32,10 +32,10 @@ app.use(methodOverride('_method'));
 app.use(rememberUser);
 app.use(fileUpload());
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 app.use('/auth', loginRouter);
 app.use('/auth/register', registerRouter);
 app.use('/inventory', inventoryRouter);
+app.use('/error', errorRouter)
 app.use('/check', (req, res) => {
     if (req.session.loggedUser === undefined) {
         res.send('not logged');
@@ -46,7 +46,8 @@ app.use('/check', (req, res) => {
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-    next(createError(404));
+    next();
+    res.render('error', {errorNumber: 404, errorType: 'Página inexistente', errorDescription: '¡Parece que te perdiste, intentá nuevamente!'})
 });
 
 try {

@@ -3,13 +3,18 @@ const database = require('../database/database');
 
 const registerControllers = {
     showRegister: (req, res) => {
-        if (req.session.loggedUser === undefined) {
-            return res.render('register', { message: '' });
-        }
-        res.redirect('/');
+       try {
+            if (req.session.loggedUser === undefined) {
+                return res.render('register', { message: '' });
+            }
+            res.redirect('/');
+       } catch (error) {
+        res.render('error', {errorNumber: 403, errorType: 'Intento de ingreso incorrecto', errorDescription: 'Intente nuevamente dentro de unos minutos'})
+       }
     },
     registerUser: async (req, res) => {
-        const { username, email, password, password_confirm } = req.body;
+        try {
+            const { username, email, password, password_confirm } = req.body;
         if(username.length === 0 || email.length === 0 || password.length === 0 || password_confirm.length === 0){
             return res.render('register', {
                 message: 'Uno o mas campos estan vacíos'
@@ -50,6 +55,9 @@ const registerControllers = {
                 }
             }
         );
+        } catch (error) {
+            res.render('error', {errorNumber: 403, errorType: 'Intento de ingreso incorrecto', errorDescription: 'Intente nuevamente dentro de unos minutos'})
+        }
     }
 };
 
