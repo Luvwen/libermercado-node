@@ -42,7 +42,6 @@ body {
     width: 100%;
     border: none;
     height: 36px;
-    /* border-radius: 10px; */
     padding-left: 15px;
     background-color: hsla(218, 92%, 95%, 0.856);
     border: none;
@@ -81,4 +80,83 @@ body {
 
 .error {
     padding-top: 15px;
+}
+
+@media (max-width: 769px) {
+    .login-container {
+        width: 90vw;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        background-color: #F97316;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+    }
+    
+    .login-container {
+        width: 90vw;
+        height: 500px;
+        border-radius: 10px;
+        display: flex;
+        background: inherit;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .form {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+        height: 300px;
+        width: 75%;
+        color: white;
+    }
+
+    .form-input {
+        width: 100%;
+        border: none;
+        height: 36px;
+        padding-left: 15px;
+        background-color: inherit;
+        color: white;
+        border: none;
+        border-bottom: 2px solid white;
+    }
+    
+    .form-input:focus {
+       outline: none;
+       border-bottom: 2px solid #0591AF;
+       border-radius: none;
+    }
+
+    input:-webkit-autofill {
+        -webkit-box-shadow:0 0 0 50px #F97316 inset; /* Change the color to your own background color */
+        -webkit-text-fill-color: white;
+    }
+
+    .form-button {
+        width: 150px;
+        height: 40px;
+        border-radius: 10px;
+        background:#0591AF;
+        color: #FFFFFF;
+        font-size: 18px;
+        border: none;
+        cursor: pointer;
+    }
+    
+    .form-register {
+        text-decoration: none;
+        color: white;
+    }
+    
+    .form-register:hover {
+        color: #0591AF;
+    }
 }

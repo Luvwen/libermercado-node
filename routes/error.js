@@ -1,8 +1,9 @@
 const express = require('express')
 const router = express.Router()
 
-const errorControllers = require('../controllers/errorControllers')
+const { showError } = require('../controllers/errorControllers')
 
-router.get('/', errorControllers)
+
+router.get('/', showError)
 
 module.exports = router
