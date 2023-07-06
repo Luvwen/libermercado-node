@@ -19,7 +19,6 @@ const inventoryControllers = {
                         if (error) {
                             console.log(error);
                         } else {
-                            console.log(data);
                             req.session.data = data;
                             const usernameToUppercase =
                                 username.charAt(0).toUpperCase() +

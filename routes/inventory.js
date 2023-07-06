@@ -11,7 +11,6 @@ const {
 } = require('../controllers/inventoryControllers');
 
 router.get('/', showInventory);
-
 router.get('/allItems', showAllItems);
 
 router.get('/addItem/:action', showInventory);
