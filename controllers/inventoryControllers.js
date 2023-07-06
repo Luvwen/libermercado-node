@@ -156,6 +156,7 @@ const inventoryControllers = {
                 actualized_item_name,
                 actualized_item_price,
                 actualized_item_description,
+                actualized_item_image,
             } = req.body;
             if (
                 actualized_item_price === '' ||
@@ -163,7 +164,7 @@ const inventoryControllers = {
             ) {
                 res.redirect('/inventory');
             }
-            const query = `UPDATE inventory SET item_name = "${actualized_item_name}", item_price = ${actualized_item_price}, item_description = "${actualized_item_description}" WHERE id = ${list_id}`;
+            const query = `UPDATE inventory SET item_name = "${actualized_item_name}", item_price = ${actualized_item_price}, item_description = "${actualized_item_description}", item_image = "${actualized_item_image}" WHERE id = ${list_id}`;
             database.query(query, (error, data) => {
                 if (error) {
                     console.log(error);
