@@ -19,7 +19,6 @@ const inventoryControllers = {
                         if (error) {
                             console.log(error);
                         } else {
-                            console.log(data);
                             req.session.data = data;
                             const usernameToUppercase =
                                 username.charAt(0).toUpperCase() +
@@ -61,8 +60,8 @@ const inventoryControllers = {
                     path.join(__dirname, '..', '/public/images/') +
                     sampleFile.name;
                 sampleFile.mv(uploadPath, (err) => {
-                    if (err) {
-                        console.log(err);
+                    if (error) {
+                        console.log(error);
                     }
                     console.log(sampleFile.name);
                 });
