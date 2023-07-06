@@ -6,7 +6,7 @@ const db = mysql.createConnection({
     user: process.env.DB_USER || 'root',
     password: process.env.DB_PASSWORD || '',
     database: process.env.DB_NAME || 'libremercado',
-    port: process.env.PORT
+    port: process.env.PORT,
 });
 
 module.exports = db;

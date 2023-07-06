@@ -10,11 +10,13 @@ const indexControllers = {
             }
             res.redirect('/auth/login');
         } catch (error) {
-            res.render('error', {errorNumber: 403, errorType: 'Intento de ingreso incorrecto', errorDescription: 'Intente nuevamente dentro de unos minutos'})
+            res.render('error', {
+                errorNumber: 403,
+                errorType: 'Intento de ingreso incorrecto',
+                errorDescription: 'Intente nuevamente dentro de unos minutos',
+            });
         }
-        
-        
-    }
+    },
 };
 
 module.exports = indexControllers;

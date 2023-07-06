@@ -27,7 +27,7 @@ const inventoryControllers = {
                             return res.render('inventory', {
                                 username: usernameToUppercase,
                                 data: data,
-                                action: action
+                                action: action,
                             });
                         }
                     }
@@ -36,81 +36,96 @@ const inventoryControllers = {
                 res.redirect('/auth/login');
             }
         } catch (error) {
-            res.render('error', {errorNumber: 500, errorType: 'Error interno', errorDescription: 'Intente nuevamente dentro de unos minutos'})
+            res.render('error', {
+                errorNumber: 500,
+                errorType: 'Error interno',
+                errorDescription: 'Intente nuevamente dentro de unos minutos',
+            });
         }
     },
     addItemToInventory: (req, res) => {
         try {
             const { item_name, item_price, item_description } = req.body;
-        const { id, username } = req.session.loggedUser;
+            const { id, username } = req.session.loggedUser;
 
-        if (!parseInt(item_price) || item_price === '') {
-            return res.render('inventory', {
-                data: req.session.data,
-                username: username
-            });
-        } else {
-            let sampleFile;
-            let uploadPath;
-            sampleFile = req.files.item_image;
-            uploadPath = uploadPath =
-                path.join(__dirname, '..', '/public/images/') + sampleFile.name;
-            sampleFile.mv(uploadPath, (err) => {
-                if (err) {
-                    console.log(err);
-                }
-                console.log(sampleFile.name);
-            });
-            database.query(
-                'INSERT INTO inventory SET?',
-                {
-                    id_user: id,
-                    item_name: item_name,
-                    item_price: item_price,
-                    item_description: item_description,
-                    item_image: sampleFile.name
-                },
-                (error, data) => {
-                    if (error) {
-                        console.log(error);
-                    } else {
-                        res.redirect('/inventory/addItem/add');
+            if (!parseInt(item_price) || item_price === '') {
+                return res.render('inventory', {
+                    data: req.session.data,
+                    username: username,
+                });
+            } else {
+                let sampleFile;
+                let uploadPath;
+                sampleFile = req.files.item_image;
+                uploadPath = uploadPath =
+                    path.join(__dirname, '..', '/public/images/') +
+                    sampleFile.name;
+                sampleFile.mv(uploadPath, (err) => {
+                    if (err) {
+                        console.log(err);
                     }
-                }
-            );
-        }
+                    console.log(sampleFile.name);
+                });
+                database.query(
+                    'INSERT INTO inventory SET?',
+                    {
+                        id_user: id,
+                        item_name: item_name,
+                        item_price: item_price,
+                        item_description: item_description,
+                        item_image: sampleFile.name,
+                    },
+                    (error, data) => {
+                        if (error) {
+                            console.log(error);
+                        } else {
+                            res.redirect('/inventory/addItem/add');
+                        }
+                    }
+                );
+            }
         } catch (error) {
-            res.render('error', {errorNumber: 500, errorType: 'Error interno', errorDescription: 'Intente nuevamente dentro de unos minutos'})
+            res.render('error', {
+                errorNumber: 500,
+                errorType: 'Error interno',
+                errorDescription: 'Intente nuevamente dentro de unos minutos',
+            });
         }
     },
     removeItemFromInventory: (req, res) => {
         try {
             const { email } = req.cookies.userLogin;
-        database.query(
-            'SELECT inventory.id_user FROM users JOIN inventory ON users.id = inventory.id_user WHERE users.email = ?',
-            [email],
-            (error, response) => {
-                if (error) {
-                    console.log(error);
-                } else {
-                    const { item_id } = req.body;
-                    const id_user = response[0].id_user;
-                    database.query(
-                        'DELETE FROM inventory WHERE id = ? && id_user = ?',
-                        [item_id, id_user],
-                        (error, data) => {
-                            if (error) {
-                                console.log(error);
-                            } else {
-                                res.redirect('/inventory/removeItem/delete');
+            database.query(
+                'SELECT inventory.id_user FROM users JOIN inventory ON users.id = inventory.id_user WHERE users.email = ?',
+                [email],
+                (error, response) => {
+                    if (error) {
+                        console.log(error);
+                    } else {
+                        const { item_id } = req.body;
+                        const id_user = response[0].id_user;
+                        database.query(
+                            'DELETE FROM inventory WHERE id = ? && id_user = ?',
+                            [item_id, id_user],
+                            (error, data) => {
+                                if (error) {
+                                    console.log(error);
+                                } else {
+                                    res.redirect(
+                                        '/inventory/removeItem/delete'
+                                    );
+                                }
                             }
-                        }
-                    );
+                        );
+                    }
                 }
-            }
-        );
+            );
         } catch (error) {
-            res.render('error', {errorNumber: 500, errorType: 'Error interno', errorDescription: 'Intente nuevamente dentro de unos minutos'})
+            res.render('error', {
+                errorNumber: 500,
+                errorType: 'Error interno',
+                errorDescription: 'Intente nuevamente dentro de unos minutos',
+            });
         }
     },
     removeItemWithId: (req, res) => {
@@ -126,9 +141,13 @@ const inventoryControllers = {
                         res.redirect('/inventory/allItems');
                     }
                 }
-        );
+            );
         } catch (error) {
-            res.render('error', {errorNumber: 500, errorType: 'Error interno', errorDescription: 'Intente nuevamente dentro de unos minutos'})
+            res.render('error', {
+                errorNumber: 500,
+                errorType: 'Error interno',
+                errorDescription: 'Intente nuevamente dentro de unos minutos',
+            });
         }
     },
     updateItemFromInventory: (req, res) => {
@@ -137,9 +156,12 @@ const inventoryControllers = {
                 list_id,
                 actualized_item_name,
                 actualized_item_price,
-                actualized_item_description
+                actualized_item_description,
             } = req.body;
-            if (actualized_item_price === '' || !parseInt(actualized_item_price)) {
+            if (
+                actualized_item_price === '' ||
+                !parseInt(actualized_item_price)
+            ) {
                 res.redirect('/inventory');
             }
             const query = `UPDATE inventory SET item_name = "${actualized_item_name}", item_price = ${actualized_item_price}, item_description = "${actualized_item_description}" WHERE id = ${list_id}`;
@@ -151,7 +173,11 @@ const inventoryControllers = {
                 }
             });
         } catch (error) {
-            res.render('error', {errorNumber: 500, errorType: 'Error interno', errorDescription: 'Intente nuevamente dentro de unos minutos'})
+            res.render('error', {
+                errorNumber: 500,
+                errorType: 'Error interno',
+                errorDescription: 'Intente nuevamente dentro de unos minutos',
+            });
         }
     },
     showAllItems: (req, res) => {
@@ -169,9 +195,13 @@ const inventoryControllers = {
                 }
             );
         } catch (error) {
-            res.render('error', {errorNumber: 500, errorType: 'Error interno', errorDescription: 'Intente nuevamente dentro de unos minutos'})
+            res.render('error', {
+                errorNumber: 500,
+                errorType: 'Error interno',
+                errorDescription: 'Intente nuevamente dentro de unos minutos',
+            });
         }
-    }
+    },
 };
 
 module.exports = inventoryControllers;

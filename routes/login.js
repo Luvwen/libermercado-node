@@ -4,7 +4,7 @@ const router = express.Router();
 const {
     showLogin,
     loginUser,
-    logout
+    logout,
 } = require('../controllers/loginControllers');
 
 router.get('/login', showLogin);
