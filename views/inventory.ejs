@@ -22,7 +22,7 @@
                 <label class="form-label" for="item_name">Nombre</label>
                 <input class="form-input" name="item_name" />
                 <label class="form-label" for="item_price">Precio</label>
-                <input class="form-input" name="item_price" />
+                <input class="form-input" name="item_price" type="number" />
                 <label class="form-label" for="item_description">Descripción</label>
                 <input class="form-input" name="item_description" />
                 <label class="form-label file-label" for="item_image">Seleccione una imagen</label>
@@ -48,8 +48,8 @@
                 </select>
                 <label class="form-label" for="actualized_item_name">Nombre</label>
                 <input class="form-input" name="actualized_item_name" />
-                <label class="form-label" for="actualized_item_price">Precio</label>
-                <input class="form-input" name="actualized_item_price" />
+                <label class="form-label" for="actualized_item_price" >Precio</label>
+                <input class="form-input" name="actualized_item_price" type="number" />
                 <label class="form-label" for="actualized_item_description">Descripción</label>
                 <input class="form-input" name="actualized_item_description" />
                 <label class="form-label file-label" for="item_image">Seleccione una imagen</label>
@@ -86,6 +86,10 @@
                         <p><a href="/inventory/actualizeItem/update" >Editar elementos</a></p>
                         <p><a href="/inventory/removeItem/delete" >Eliminar elementos</a></p>
                     </div>
+                <% } %>
+                <% if(typeof error != 'undefined') { %> 
+                    <% console.log(error) %>
+                    <h2 style="color: red"><%= error %></>
                 <% } %>
     </div>
     </body>

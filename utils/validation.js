@@ -12,6 +12,13 @@ const validation = {
     comparePassword: (password, password2) => {
         return password === password2 ? true : false;
     },
+    isNumber: (field) => {
+        if (!isNaN(field) && field !== '') {
+            return true;
+        } else {
+            return false;
+        }
+    },
 };
 
 module.exports = validation;

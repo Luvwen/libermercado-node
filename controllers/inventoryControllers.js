@@ -1,5 +1,6 @@
 const database = require('../database/database');
 const path = require('path');
+const { isEmpty } = require('../utils/validation');
 
 const inventoryControllers = {
     showInventory: (req, res) => {
@@ -46,11 +47,21 @@ const inventoryControllers = {
         try {
             const { item_name, item_price, item_description } = req.body;
             const { id, username } = req.session.loggedUser;
-
-            if (!parseInt(item_price) || item_price === '') {
+            if (isEmpty(item_name)) {
                 return res.render('inventory', {
                     data: req.session.data,
                     username: username,
+                    action: '',
+                    error: 'Nombre requerido',
+                });
+            }
+
+            if (isEmpty(actualized_item_name)) {
+                return res.render('inventory', {
+                    data: req.session.data,
+                    username: username,
+                    action: '',
+                    error: 'Número requerido',
                 });
             } else {
                 let sampleFile;
@@ -158,12 +169,7 @@ const inventoryControllers = {
                 actualized_item_description,
                 actualized_item_image,
             } = req.body;
-            if (
-                actualized_item_price === '' ||
-                !parseInt(actualized_item_price)
-            ) {
-                res.redirect('/inventory');
-            }
+
             const query = `UPDATE inventory SET item_name = "${actualized_item_name}", item_price = ${actualized_item_price}, item_description = "${actualized_item_description}", item_image = "${actualized_item_image}" WHERE id = ${list_id}`;
             database.query(query, (error, data) => {
                 if (error) {
