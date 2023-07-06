@@ -47,53 +47,35 @@ const inventoryControllers = {
         try {
             const { item_name, item_price, item_description } = req.body;
             const { id, username } = req.session.loggedUser;
-            if (isEmpty(item_name)) {
-                return res.render('inventory', {
-                    data: req.session.data,
-                    username: username,
-                    action: '',
-                    error: 'Nombre requerido',
-                });
-            }
 
-            if (isEmpty(actualized_item_name)) {
-                return res.render('inventory', {
-                    data: req.session.data,
-                    username: username,
-                    action: '',
-                    error: 'Número requerido',
-                });
-            } else {
-                let sampleFile;
-                let uploadPath;
-                sampleFile = req.files.item_image;
-                uploadPath = uploadPath =
-                    path.join(__dirname, '..', '/public/images/') +
-                    sampleFile.name;
-                sampleFile.mv(uploadPath, (error) => {
+            let sampleFile;
+            let uploadPath;
+            sampleFile = req.files.item_image;
+            uploadPath = uploadPath =
+                path.join(__dirname, '..', '/public/images/') + sampleFile.name;
+            sampleFile.mv(uploadPath, (error) => {
+                if (error) {
+                    console.log(error);
+                }
+                console.log(sampleFile.name);
+            });
+            database.query(
+                'INSERT INTO inventory SET?',
+                {
+                    id_user: id,
+                    item_name: item_name,
+                    item_price: item_price,
+                    item_description: item_description,
+                    item_image: sampleFile.name,
+                },
+                (error, data) => {
                     if (error) {
                         console.log(error);
+                    } else {
+                        res.redirect('/inventory/addItem/add');
                     }
-                    console.log(sampleFile.name);
-                });
-                database.query(
-                    'INSERT INTO inventory SET?',
-                    {
-                        id_user: id,
-                        item_name: item_name,
-                        item_price: item_price,
-                        item_description: item_description,
-                        item_image: sampleFile.name,
-                    },
-                    (error, data) => {
-                        if (error) {
-                            console.log(error);
-                        } else {
-                            res.redirect('/inventory/addItem/add');
-                        }
-                    }
-                );
-            }
+                }
+            );
         } catch (error) {
             res.render('error', {
                 errorNumber: 500,
