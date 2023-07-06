@@ -1,6 +1,13 @@
 const bcrypt = require('bcrypt');
 const database = require('../database/database');
 
+const {
+    checkLength,
+    comparePassword,
+    isEmail,
+    isEmpty,
+} = require('../utils/validation');
+
 const registerControllers = {
     showRegister: (req, res) => {
         try {
@@ -20,13 +27,18 @@ const registerControllers = {
         try {
             const { username, email, password, password_confirm } = req.body;
             if (
-                username.length === 0 ||
-                email.length === 0 ||
-                password.length === 0 ||
-                password_confirm.length === 0
+                isEmpty(username) ||
+                isEmpty(email) ||
+                isEmpty(password) ||
+                isEmpty(password_confirm)
             ) {
                 return res.render('register', {
                     message: 'Uno o mas campos estan vacíos',
+                });
+            }
+            if (!isEmail(email)) {
+                return res.render('register', {
+                    message: 'Email con formato inválido',
                 });
             }
             database.query(
@@ -36,11 +48,19 @@ const registerControllers = {
                     if (error) {
                         console.log(error);
                     }
-                    if (data.length > 0) {
+                    if (!isEmpty(data)) {
                         return res.render('register', {
                             message: 'Email ya registrado',
                         });
-                    } else if (password !== password_confirm) {
+                    } else if (
+                        !checkLength(password, 8, 15) ||
+                        !checkLength(password_confirm, 8, 15)
+                    ) {
+                        return res.render('register', {
+                            message:
+                                'Las contraseñas tienen que tener entre 8 y 15 caracteres',
+                        });
+                    } else if (!comparePassword(password, password_confirm)) {
                         return res.render('register', {
                             message: 'Las contraseñas deben coincidir',
                         });
