@@ -70,9 +70,9 @@ const inventoryControllers = {
                 uploadPath = uploadPath =
                     path.join(__dirname, '..', '/public/images/') +
                     sampleFile.name;
-                sampleFile.mv(uploadPath, (err) => {
-                    if (err) {
-                        console.log(err);
+                sampleFile.mv(uploadPath, (error) => {
+                    if (error) {
+                        console.log(error);
                     }
                     console.log(sampleFile.name);
                 });
