@@ -1,10 +1,8 @@
 const bcrypt = require('bcrypt');
 const database = require('../database/database');
-const { validationResult } = require('express-validator');
 
 const registerControllers = {
     showRegister: (req, res) => {
-        console.log(validationResult);
         try {
             if (req.session.loggedUser === undefined) {
                 return res.render('register', { message: '' });
