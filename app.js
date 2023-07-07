@@ -8,11 +8,10 @@ const session = require('express-session');
 const methodOverride = require('method-override');
 const fileUpload = require('express-fileupload');
 
-var indexRouter = require('./routes/index');
+const indexRouter = require('./routes/index');
 const loginRouter = require('./routes/login');
 const registerRouter = require('./routes/register');
 const inventoryRouter = require('./routes/inventory');
-const errorRouter = require('./routes/error');
 const database = require('./database/database');
 
 var app = express();
@@ -32,7 +31,6 @@ app.use('/', indexRouter);
 app.use('/auth', loginRouter);
 app.use('/auth/register', registerRouter);
 app.use('/inventory', inventoryRouter);
-app.use('/error', errorRouter);
 app.use('/check', (req, res) => {
     if (req.session.loggedUser === undefined) {
         res.send('not logged');

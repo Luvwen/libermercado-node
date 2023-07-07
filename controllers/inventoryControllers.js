@@ -46,7 +46,7 @@ const inventoryControllers = {
     addItemToInventory: (req, res) => {
         try {
             const { item_name, item_price, item_description } = req.body;
-            const { id, username } = req.session.loggedUser;
+            const { id } = req.session.loggedUser;
 
             let sampleFile;
             let uploadPath;
